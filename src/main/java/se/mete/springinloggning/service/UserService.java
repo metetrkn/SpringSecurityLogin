@@ -1,4 +1,4 @@
-package se.mete.springinloggning.Service;
+package se.mete.springinloggning.service;
 
 import org.springframework.stereotype.Service;
 
