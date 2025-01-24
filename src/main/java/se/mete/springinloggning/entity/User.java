@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
  * ApplicationUser entity/Table = represents different users in the db
  */
 @Entity
-public class ApplicationUser {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Automatically generates the ID
     private Long id; // Primary Key
@@ -23,7 +23,7 @@ public class ApplicationUser {
     /**
      * Empty constructor for JPA
      */
-    public ApplicationUser() {}
+    public User() {}
 
 
     /**
@@ -33,7 +33,7 @@ public class ApplicationUser {
      * @param password = users password to logg in the system
      * @param role = users authorization role in the system
      */
-    public ApplicationUser(String username, String password, String role) {
+    public User(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
