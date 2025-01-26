@@ -9,29 +9,47 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import se.mete.springinloggning.service.UserService;
 
-@Controller
+@Controller // Marks this class as a Spring MVC controller
 public class UserManagementController {
 
-    @Autowired
+    @Autowired // Injects an instance of UserService
     private UserService userService;
 
-    @GetMapping("/create-user")
+    /**
+     * Displays the form for creating a new user.
+     *
+     * @return The name of the create-user view template (e.g., create-user.html)
+     */
+    @GetMapping("/create-user") // Maps HTTP GET requests to the /create-user endpoint
     public String showCreateUserForm() {
-        return "create-user";
+        return "create-user"; // Returns the name of the create-user view template
     }
 
-    @PostMapping("/create-user")
-    public String createUser(@RequestParam String username,
-                           @RequestParam String password,
-                           @RequestParam String role,
-                           RedirectAttributes redirectAttributes) {
+    /**
+     * Handles the submission of the create-user form.
+     * Creates a new user with the provided username, password, and role.
+     *
+     * @param username The username of the new user
+     * @param password The password of the new user
+     * @param role The role of the new user
+     * @param redirectAttributes Used to add flash attributes for displaying messages after redirection
+     * @return A redirect to the /create-user endpoint
+     */
+    @PostMapping("/create-user") // Maps HTTP POST requests to the /create-user endpoint
+    public String createUser(@RequestParam String username, // Binds the username parameter from the form
+                             @RequestParam String password, // Binds the password parameter from the form
+                             @RequestParam String role, // Binds the role parameter from the form
+                             RedirectAttributes redirectAttributes) { // Used to pass attributes after redirection
         try {
+            // Attempt to create a new user using the UserService
             userService.createUser(username, password, role);
+            // Add a success message to be displayed after redirection
             redirectAttributes.addFlashAttribute("message", "User created successfully!");
-            return "redirect:/create-user";
         } catch (RuntimeException e) {
+            // If an error occurs, add the error message to be displayed after redirection
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/create-user";
         }
+        // Redirect back to the create-user page
+        return "redirect:/create-user";
     }
 }

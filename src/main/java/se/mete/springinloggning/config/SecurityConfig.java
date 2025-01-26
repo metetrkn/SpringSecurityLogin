@@ -11,11 +11,11 @@ import org.springframework.security.web.SecurityFilterChain;
  * Security configuration class for the application.
  * This class configures Spring Security to handle authentication and authorization.
  */
-@Configuration
-@EnableWebSecurity // Web security support
+@Configuration // Marks this class as a configuration class for Spring
+@EnableWebSecurity // Enables Spring Security's web security support
 public class SecurityConfig {
 
-    @Autowired
+    @Autowired // Injects the custom authentication success handler
     private CustomAuthenticationSuccessHandler successHandler;
 
     /**
@@ -27,27 +27,28 @@ public class SecurityConfig {
      * @return The configured SecurityFilterChain
      * @throws Exception If an error occurs during configuration
      */
-    @Bean // Marks this method as a bean definition
+    @Bean // Marks this method as a bean definition, making it a Spring-managed bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER")
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers("/manager/**").hasRole("MANAGER")
-                        .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers("/", "/login").permitAll()
-                        .anyRequest().authenticated()
+                        // Define access rules for specific endpoints
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER") // Allow USER, ADMIN, and MANAGER roles to access /user/**
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER") // Allow ADMIN and MANAGER roles to access /admin/**
+                        .requestMatchers("/manager/**").hasRole("MANAGER") // Allow only MANAGER role to access /manager/**
+                        .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER") // Allow ADMIN and MANAGER roles to access /create-user
+                        .requestMatchers("/", "/login").permitAll() // Allow public access to the root and login pages
+                        .anyRequest().authenticated() // Require authentication for all other requests
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .successHandler(successHandler)
-                        .permitAll()
+                        .loginPage("/login") // Specify the custom login page
+                        .successHandler(successHandler) // Use the custom success handler for login redirection
+                        .permitAll() // Allow everyone to access the login page
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
+                        .logoutSuccessUrl("/login?logout") // Redirect to the login page with a logout parameter after logout
+                        .permitAll() // Allow everyone to access the logout endpoint
                 );
 
-        return http.build();
+        return http.build(); // Build and return the configured SecurityFilterChain
     }
 }

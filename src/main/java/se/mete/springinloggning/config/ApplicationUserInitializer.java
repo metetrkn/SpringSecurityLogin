@@ -7,39 +7,39 @@ import org.springframework.stereotype.Component;
 import se.mete.springinloggning.entity.ApplicationUser;
 import se.mete.springinloggning.repository.ApplicationUserRepository;
 
-@Component
+@Component // Marks this class as a Spring component, making it a candidate for auto-detection and dependency injection
 public class ApplicationUserInitializer {
 
-    @Autowired
+    @Autowired // Injects an instance of ApplicationUserRepository
     private ApplicationUserRepository userRepository;
 
-    @Autowired
+    @Autowired // Injects an instance of PasswordEncoder for encoding passwords
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
+    @PostConstruct // This method will be executed after dependency injection is done to perform any initialization
     public void initializeUsers() {
-        // Only initialize if no users exist
+        // Check if there are no users in the repository
         if (userRepository.count() == 0) {
-            // Create USER role
+            // Create and save a user with the USER role
             ApplicationUser user = new ApplicationUser();
-            user.setUsername("user");
-            user.setPassword(passwordEncoder.encode("userpass"));
-            user.setRole("ROLE_USER");
-            userRepository.save(user);
+            user.setUsername("user"); // Set the username
+            user.setPassword(passwordEncoder.encode("userpass")); // Encode and set the password
+            user.setRole("ROLE_USER"); // Set the role
+            userRepository.save(user); // Save the user to the repository
 
-            // Create ADMIN role
+            // Create and save a user with the ADMIN role
             ApplicationUser admin = new ApplicationUser();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("adminpass"));
-            admin.setRole("ROLE_ADMIN");
-            userRepository.save(admin);
+            admin.setUsername("admin"); // Set the username
+            admin.setPassword(passwordEncoder.encode("adminpass")); // Encode and set the password
+            admin.setRole("ROLE_ADMIN"); // Set the role
+            userRepository.save(admin); // Save the admin to the repository
 
-            // Create MANAGER role
+            // Create and save a user with the MANAGER role
             ApplicationUser manager = new ApplicationUser();
-            manager.setUsername("manager");
-            manager.setPassword(passwordEncoder.encode("managerpass"));
-            manager.setRole("ROLE_MANAGER");
-            userRepository.save(manager);
+            manager.setUsername("manager"); // Set the username
+            manager.setPassword(passwordEncoder.encode("managerpass")); // Encode and set the password
+            manager.setRole("ROLE_MANAGER"); // Set the role
+            userRepository.save(manager); // Save the manager to the repository
         }
     }
 }
