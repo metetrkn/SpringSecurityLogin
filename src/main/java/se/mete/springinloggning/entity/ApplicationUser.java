@@ -4,10 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import lombok.Data;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -17,29 +19,36 @@ import java.util.Collections;
  * by Spring Security for authentication and authorization.
  */
 @Entity // Marks this class as a JPA entity, representing a table in the database
-public class User implements UserDetails {
+@Table(name = "application_users")
+@Data
+public class ApplicationUser implements UserDetails {
 
     @Id // Marks this field as the primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generates the ID using database identity column
     private Long id; // Primary key for the user
 
+    @Column(unique = true, nullable = false)
     private String username; // Username of the user
+
+    @Column(nullable = false)
     private String password; // Password of the user (encoded)
+
+    @Column(nullable = false)
     private String role; // Role of the user (e.g., ROLE_USER, ROLE_ADMIN)
 
     /**
      * Default constructor required by JPA.
      */
-    public User() {}
+    public ApplicationUser() {}
 
     /**
-     * Parameterized constructor for creating a User object.
+     * Parameterized constructor for creating a ApplicationUser object.
      *
      * @param username The username of the user
      * @param password The password of the user
      * @param role The role of the user
      */
-    public User(String username, String password, String role) {
+    public ApplicationUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -116,32 +125,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true; // Users are always enabled
-    }
-
-    /**
-     * Sets the username of the user.
-     *
-     * @param username The username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
-     * Sets the password of the user.
-     *
-     * @param password The password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    /**
-     * Sets the role of the user.
-     *
-     * @param role The role to set
-     */
-    public void setRole(String role) {
-        this.role = role;
     }
 }

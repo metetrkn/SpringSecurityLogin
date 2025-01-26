@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import se.mete.springinloggning.entity.User;
-import se.mete.springinloggning.repository.UserRepository;
+import se.mete.springinloggning.entity.ApplicationUser;
+import se.mete.springinloggning.repository.ApplicationUserRepository;
 
 /**
  * Custom implementation of the UserDetailsService interface.
@@ -16,8 +16,8 @@ import se.mete.springinloggning.repository.UserRepository;
 @Service // Marks this class as a Spring service component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired // Injects the UserRepository bean
-    private UserRepository userRepository;
+    @Autowired // Injects the ApplicationUserRepository bean
+    private ApplicationUserRepository userRepository;
 
     /**
      * Loads a user by their username.
@@ -30,10 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // Find the user by username in the repository
-        User user = userRepository.findByUsername(username)
+        return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-
-        // Return the User object, which implements the UserDetails interface
-        return user;
     }
 }
