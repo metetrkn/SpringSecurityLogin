@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manager Page</title>
+</head>
+<body>
+    <h2>Manager Dashboard</h2>
+    <p>Welcome to the manager area! This page is only accessible to users with the MANAGER role.</p>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+</body>
+</html>
