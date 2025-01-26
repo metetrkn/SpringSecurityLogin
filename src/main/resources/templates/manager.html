@@ -2,12 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Manager Page</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
-    <h2>Manager Dashboard</h2>
-    <p>Welcome to the manager area! This page is only accessible to users with the MANAGER role.</p>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout"/>
-    </form>
+    <div class="container">
+        <h2>Manager Dashboard</h2>
+        <p>Welcome to the manager area! This page is only accessible to users with the MANAGER role.</p>
+        
+        <a href="/create-user" class="btn">Create New User</a>
+        
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <input type="submit" value="Logout" class="btn logout-btn" style="border: none;"/>
+        </form>
+    </div>
 </body>
 </html>

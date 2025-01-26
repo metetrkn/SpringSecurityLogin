@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/manager/**").hasRole("MANAGER")
+                        .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers("/", "/login").permitAll()
                         .anyRequest().authenticated()
                 )

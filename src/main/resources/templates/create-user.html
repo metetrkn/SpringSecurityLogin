@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create New User</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create New User</h2>
+        
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        
+        <form th:action="@{/create-user}" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+            
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="ROLE_USER">User</option>
+                    <option value="ROLE_ADMIN">Admin</option>
+                    <option value="ROLE_MANAGER">Manager</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn">Create User</button>
+        </form>
+        
+        <div style="margin-top: 20px;">
+            <a th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="margin-right: 10px;">Back to Admin Dashboard</a>
+            <a th:href="@{/manager}" th:if="${#authorization.expression('hasRole(''MANAGER'')')}" style="margin-right: 10px;">Back to Manager Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
