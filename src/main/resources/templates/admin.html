@@ -32,6 +32,19 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .document-list {
+            margin-top: 20px;
+        }
+        .document-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .document-title {
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +55,14 @@
         <div class="admin-section">
             <h3>Administrative Functions</h3>
             <a href="/create-user" class="btn">Create New User</a>
+        </div>
+
+        <div class="document-list">
+            <h3>Available Documents:</h3>
+            <div th:each="doc : ${@managerComponent.documentList()}" class="document-item">
+                <div class="document-title" th:text="${doc.title}"></div>
+                <div th:text="${doc.description}"></div>
+            </div>
         </div>
 
         <form th:action="@{/logout}" method="post" style="display: inline;">
