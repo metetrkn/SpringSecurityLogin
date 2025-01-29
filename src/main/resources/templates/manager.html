@@ -39,6 +39,12 @@
             font-weight: bold;
             color: #333;
         }
+        .admin-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +52,11 @@
         <h2>Manager Dashboard</h2>
         <p>Welcome <span th:text="${#authentication.principal.username}"></span>!</p>
         
+        <div class="admin-section">
+            <h3>Administrative Functions</h3>
+            <a href="/create-user" class="btn">Create New User</a>
+        </div>
+
         <div class="document-list">
             <h3>Available Documents:</h3>
             <div th:each="doc : ${@managerComponent.documentList()}" class="document-item">
