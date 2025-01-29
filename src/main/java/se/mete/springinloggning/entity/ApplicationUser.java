@@ -70,7 +70,7 @@ public class ApplicationUser implements UserDetails {
      * @return A collection of GrantedAuthority objects
      */
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<  ? extends GrantedAuthority> getAuthorities() {
         // Returns a singleton list of GrantedAuthority, contains user's roles as well
         return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
