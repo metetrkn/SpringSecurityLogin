@@ -34,21 +34,19 @@ public class SecurityConfig {
                         // Define access rules for specific endpoints
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER") // Allow USER, ADMIN, and MANAGER roles to access /user/**
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER") // Allow ADMIN and MANAGER roles to access /admin/**
-                        .requestMatchers("/manager/**").hasRole("MANAGER") // Allow only MANAGER role to access /manager/**
+                        .requestMatchers("/manager").hasRole("MANAGER") // Allow only MANAGER role to access /manager
                         .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER") // Allow ADMIN and MANAGER roles to access /create-user
                         .requestMatchers("/", "/login").permitAll() // Allow public access to the root and login pages
                         .anyRequest().authenticated() // Require authentication for all other requests
                 )
                 .formLogin(form -> form
                         .loginPage("/login") // Specify the custom login page
-                        .successHandler(successHandler) // Use the custom success handler for login redirection
-                        .permitAll() // Allow everyone to access the login page
+                        .successHandler(successHandler) // Use custom success handler
+                        .permitAll() // Allow all users to access the login page
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout") // Redirect to the login page with a logout parameter after logout
-                        .permitAll() // Allow everyone to access the logout endpoint
+                        .permitAll() // Allow all users to access the logout endpoint
                 );
-
-        return http.build(); // Build and return the configured SecurityFilterChain
+        return http.build();
     }
 }

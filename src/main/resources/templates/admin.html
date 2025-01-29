@@ -26,15 +26,24 @@
         .logout-btn:hover {
             background-color: #c82333;
         }
+        .admin-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Admin Dashboard</h2>
-        <p>Welcome to the admin area! This page is only accessible to users with ADMIN or MANAGER roles.</p>
+        <p>Welcome <span th:text="${#authentication.principal.username}"></span>! This page is only accessible to users with ADMIN or MANAGER roles.</p>
         
-        <a href="/create-user" class="btn">Create New User</a>
-        
+        <div class="admin-section">
+            <h3>Administrative Functions</h3>
+            <a href="/create-user" class="btn">Create New User</a>
+        </div>
+
         <form th:action="@{/logout}" method="post" style="display: inline;">
             <input type="submit" value="Logout" class="btn logout-btn" style="border: none;"/>
         </form>
