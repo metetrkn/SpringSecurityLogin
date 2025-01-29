@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>User Dashboard</h2>
-    <p>Welcome to the user area! This page is accessible to all authenticated users.</p>
+    <p>Welcome <span th:text="${#authentication.principal.username}"></span> to the user area! This page is accessible to all authenticated users.</p>
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Logout"/>
     </form>
