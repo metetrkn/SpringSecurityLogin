@@ -1,6 +1,5 @@
 package se.mete.springinloggning.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +19,12 @@ import java.util.Collections;
 @Service // Marks this class as a Spring service component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired // Injects the ApplicationUserRepository bean
-    private ApplicationUserRepository userRepository;
+    // Injecting in constructor safer than @AutoWired
+    private final ApplicationUserRepository userRepository;
+
+    public CustomUserDetailsService(ApplicationUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * Loads a user by their username.
