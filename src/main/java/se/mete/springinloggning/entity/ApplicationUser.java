@@ -40,7 +40,7 @@ public class ApplicationUser implements UserDetails {
 
 
     /**
-     * Empty constructor for JPA.
+     * Default constructor for JPA.
      */
     public ApplicationUser() {}
 
@@ -63,7 +63,7 @@ public class ApplicationUser implements UserDetails {
 
 
     /**
-     * Implements the getAuthorities() method from the UserDetails interface in Spring Security.
+     * Implements the abstract getAuthorities() method from the UserDetails interface in Spring Security.
      * Implementation must for interface’s sake
      * Gets the role field of objects and Spring Security uses these info to check which users allowed to access
      *
@@ -71,7 +71,10 @@ public class ApplicationUser implements UserDetails {
      */
     @Override
     public Collection<  ? extends GrantedAuthority> getAuthorities() {
-        // Returns a singleton list of GrantedAuthority, contains user's roles as well
+        // Returns a singleton list of GrantedAuthority
+        // Returns only one role for each user
+        // In the abstract getAuthorities() method's signature expects collection as return type
+        // The reason we return singletonList is immutability, role can not change after created
         return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
 }
