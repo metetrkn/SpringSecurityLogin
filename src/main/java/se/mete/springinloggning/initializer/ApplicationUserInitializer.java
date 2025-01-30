@@ -7,7 +7,7 @@ import se.mete.springinloggning.entity.ApplicationUser;
 import se.mete.springinloggning.repository.ApplicationUserRepository;
 
 /**
- * Initializes the ApplicationUser entity with default users if there is no
+ * Initializes the ApplicationUser entity with default users if there is no previous user in db
  */
 @Component // Marks this class as a Spring component, making it a candidate for auto-detection and dependency injection
 public class ApplicationUserInitializer {

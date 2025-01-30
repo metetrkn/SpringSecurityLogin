@@ -45,10 +45,10 @@ public class UserService {
         }
 
         // Hashes the plain text password using the PasswordEncoder
-        String hashedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(password);
 
         // Create a new ApplicationUser object with the provided details
-        ApplicationUser newUser = new ApplicationUser(username, hashedPassword, role);
+        ApplicationUser newUser = new ApplicationUser(username, encodedPassword, role);
 
         // Save the new user to the database and return the saved user
         userRepository.save(newUser);
