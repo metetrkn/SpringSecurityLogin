@@ -1,0 +1,4 @@
+.username {
+    font-size: 1.5em; /* This will apply to all instances of username span */
+    font-weight: bold;
+}
