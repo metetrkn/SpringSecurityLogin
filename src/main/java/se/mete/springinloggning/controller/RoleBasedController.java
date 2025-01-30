@@ -3,6 +3,9 @@ package se.mete.springinloggning.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Returns login and role-based views
+ */
 @Controller // Marks this class as a Spring MVC controller
 public class RoleBasedController {
 
@@ -16,6 +19,7 @@ public class RoleBasedController {
         return "login"; // Returns the name of the login view template
     }
 
+
     /**
      * Handles requests to the user page.
      *
@@ -23,8 +27,9 @@ public class RoleBasedController {
      */
     @GetMapping("/user") // Maps HTTP GET requests to the /user endpoint
     public String userPage() {
-        return "user"; // Returns the name of the user view template
+        return "user";
     }
+
 
     /**
      * Handles requests to the admin page.
@@ -33,7 +38,7 @@ public class RoleBasedController {
      */
     @GetMapping("/admin") // Maps HTTP GET requests to the /admin endpoint
     public String adminPage() {
-        return "admin"; // Returns the name of the admin view template
+        return "admin";
     }
 
     /**
@@ -43,6 +48,6 @@ public class RoleBasedController {
      */
     @GetMapping("/manager") // Maps HTTP GET requests to the /manager endpoint
     public String managerPage() {
-        return "manager"; // Returns the name of the manager view template
+        return "manager";
     }
 }
