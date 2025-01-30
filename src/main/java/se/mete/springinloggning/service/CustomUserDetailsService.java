@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import se.mete.springinloggning.entity.ApplicationUser;
 import se.mete.springinloggning.repository.ApplicationUserRepository;
-
 import java.util.Collections;
 
 /**

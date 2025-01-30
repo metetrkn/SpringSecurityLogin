@@ -3,7 +3,6 @@ package se.mete.springinloggning.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import se.mete.springinloggning.repository.ApplicationUserRepository;
 import se.mete.springinloggning.entity.ApplicationUser;
 

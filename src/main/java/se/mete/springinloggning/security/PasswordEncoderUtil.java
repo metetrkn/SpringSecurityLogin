@@ -3,9 +3,7 @@ package se.mete.springinloggning.security;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * Utility class for encoding passwords using BCrypt.
- * This class is primarily used for generating encoded passwords
- * that can be stored in the database.
+ * This class encodes passwords with BCrypt that can be stored in the database.
  */
 public class PasswordEncoderUtil {
 
