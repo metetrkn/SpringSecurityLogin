@@ -7,8 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Set;
 
@@ -31,23 +29,23 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
-        // Convert the user's authorities (roles) into a Set of strings
+        // Roles set contains all roles <USER, ADMIN, MANAGER>
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         // Default target URL for users with the ROLE_USER role
-        String targetUrl = "/user";
+        String targetUrl;
 
-        // Check if the user has the ROLE_MANAGER role
-        if (roles.contains("ROLE_MANAGER")) {
-            targetUrl = "/manager"; // Set the target URL to the manager page
-        }
-
-        // Check if the user has the ROLE_ADMIN role
-        else if (roles.contains("ROLE_ADMIN")) {
-            targetUrl = "/admin"; // Set the target URL to the admin page
+        // Check for the highest-priority role first
+        if (roles.contains("ROLE_ADMIN")) {
+            targetUrl = "/admin";
+        } else if (roles.contains("ROLE_MANAGER")) {
+            targetUrl = "/manager";
+        } else {
+            targetUrl = "/user";
         }
 
         // Redirect the user to the appropriate page based on their role
         response.sendRedirect(targetUrl);
     }
 }
+
