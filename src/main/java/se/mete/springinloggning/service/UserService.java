@@ -1,6 +1,6 @@
 package se.mete.springinloggning.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import se.mete.springinloggning.repository.ApplicationUserRepository;
@@ -8,12 +8,21 @@ import se.mete.springinloggning.entity.ApplicationUser;
 
 @Service // Marks this class as a Spring service component
 public class UserService {
+    // Dependency injection in constructor
+    private final ApplicationUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired // Injects the ApplicationUserRepository bean
-    private ApplicationUserRepository userRepository;
+    /**
+     * Parameterised constructor used for Dependency Injection
+     *
+     * @param userRepository = Interacts with DB
+     * @param passwordEncoder = To hash passwords
+     */
+    public UserService(ApplicationUserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-    @Autowired // Injects the PasswordEncoder bean for encoding passwords
-    private PasswordEncoder passwordEncoder;
 
     /**
      * Creates a new user with the provided username, password, and role.
@@ -22,10 +31,9 @@ public class UserService {
      * @param username The username of the new user
      * @param password The password of the new user (in plain text)
      * @param role The role of the new user (e.g., ROLE_USER, ROLE_ADMIN)
-     * @return The newly created ApplicationUser object
      * @throws RuntimeException If the username already exists in the database
      */
-    public ApplicationUser createUser(String username, String password, String role) {
+    public void createUser(String username, String password, String role) {
         // Check if a user with the same username already exists
         if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username already exists"); // Throw an exception if the username is taken
@@ -38,6 +46,6 @@ public class UserService {
         ApplicationUser newUser = new ApplicationUser(username, encodedPassword, role);
 
         // Save the new user to the database and return the saved user
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
     }
 }
