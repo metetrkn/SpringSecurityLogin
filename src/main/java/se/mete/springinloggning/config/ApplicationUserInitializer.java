@@ -7,14 +7,27 @@ import org.springframework.stereotype.Component;
 import se.mete.springinloggning.entity.ApplicationUser;
 import se.mete.springinloggning.repository.ApplicationUserRepository;
 
+/**
+ * Initializes the ApplicationUser entity with default users if there is no
+ */
 @Component // Marks this class as a Spring component, making it a candidate for auto-detection and dependency injection
 public class ApplicationUserInitializer {
-
-    @Autowired // Injects an instance of ApplicationUserRepository
+    // Dependency injection into constructor
     private ApplicationUserRepository userRepository;
-
-    @Autowired // Injects an instance of PasswordEncoder for encoding passwords
     private PasswordEncoder passwordEncoder;
+
+    /**
+     * Parametrized constructor
+     *
+     * @param userRepository
+     * @param passwordEncoder
+     */
+    public ApplicationUserInitializer(ApplicationUserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+
+    }
+
 
     /**
      * Default method to create new users into system if there is no initial records in db
@@ -24,6 +37,7 @@ public class ApplicationUserInitializer {
     public void initializeUsers() {
         // Check if there are no users in the repository
         if (userRepository.count() == 0) {
+
             // Create and save a user with the USER role
             ApplicationUser user = new ApplicationUser();
             user.setUsername("user"); // Set the username
