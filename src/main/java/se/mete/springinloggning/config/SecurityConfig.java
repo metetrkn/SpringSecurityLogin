@@ -11,7 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * Security configuration class for the application.
  * This class configures Spring Security to handle authentication and authorization.
  */
-@Configuration // Marks this class as a configuration class for Spring
+@Configuration // Marks this class as a configuration, fabrik for @Beans
 @EnableWebSecurity // Enables Spring Security's web security support
 public class SecurityConfig {
 
@@ -25,30 +25,46 @@ public class SecurityConfig {
 
     /**
      * Configures the security filter chain for HTTP requests.
-     * This method defines which endpoints are public, which require authentication,
-     * and how login and logout are handled.
      *
      * @param http The HttpSecurity object used to configure security
      * @return The configured SecurityFilterChain
      * @throws Exception If an error occurs during configuration
      */
-    @Bean // Marks this method as a bean definition, making it a Spring-managed bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(auth -> auth
+
+        //This section specifies which users (based on roles) can access different parts of the application.
+        http.authorizeHttpRequests(auth -> auth
+
                         // Define access rules for specific endpoints
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER") // Allow USER, ADMIN, and MANAGER roles to access /user/**
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER") // Allow ADMIN and MANAGER roles to access /admin/**
-                        .requestMatchers("/manager").hasRole("MANAGER") // Allow only MANAGER role to access /manager
-                        .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER") // Allow ADMIN and MANAGER roles to access /create-user
-                        .requestMatchers("/", "/login").permitAll() // Allow public access to the root and login pages
-                        .anyRequest().authenticated() // Require authentication for all other requests
+                        // Allow USER, ADMIN, and MANAGER roles to access /user/** url
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER")
+
+                        // Allow ADMIN and MANAGER roles to access /admin/** url
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
+
+                        // Allow only MANAGER role to access /manager/** url
+                        .requestMatchers("/manager").hasRole("MANAGER")
+
+                        // Allow ADMIN and MANAGER roles to access /create-user/** url
+                        .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER")
+
+                        // Allow public access/all users to the root and login pages
+                        .requestMatchers("/", "/login").permitAll()
+
+                        // All other requests doesn't specify above requires authentication
+                        .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
-                        .loginPage("/login") // Specify the custom login page
-                        .successHandler(successHandler) // Use custom success handler
-                        .permitAll() // Allow all users to access the login page
+
+                .formLogin(form -> form // Lambda expression for representing the FormLoginConfigurer<HttpSecurity> object.
+                        // Specify the custom login page / not default login page of Spring Security
+                        .loginPage("/login")
+                        // How to act after authorization. Use custom success handler that defined in config/CustomAuth...
+                        .successHandler(successHandler)
+                        // Allow all users to access the login page
+                        .permitAll()
                 )
+
                 .logout(logout -> logout
                         .permitAll() // Allow all users to access the logout endpoint
                 );
