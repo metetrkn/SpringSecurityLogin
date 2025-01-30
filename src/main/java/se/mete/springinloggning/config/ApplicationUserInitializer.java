@@ -16,6 +16,10 @@ public class ApplicationUserInitializer {
     @Autowired // Injects an instance of PasswordEncoder for encoding passwords
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Default method to create new users into system if there is no initial records in db
+     * In that case 1 user, admin and manager will create in db
+     */
     @PostConstruct // This method will be executed after dependency injection is done to perform any initialization
     public void initializeUsers() {
         // Check if there are no users in the repository
