@@ -16,12 +16,10 @@ import lombok.Data;
 
 
 /**
- * @Entity = Marks this class as a table
- * @Data = Lombok annotation to automatically generate getters, setters etc
- * ApplicationUser class represents each user/row/record in table
+ * ApplicationUser class represents each user in table
  */
-@Entity
-@Data // Automatic getters and setters
+@Entity // Marks this class as a table
+@Data // Lombok annotation to automatically generate getters, setters
 @Table(name = "application_users") // Name of the table
 public class ApplicationUser implements UserDetails {
 

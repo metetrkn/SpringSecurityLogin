@@ -18,7 +18,7 @@ import java.util.Collections;
 @Service // Marks this class as a Spring service component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    // Injecting in constructor safer than @AutoWired
+    // Injecting in constructor, safer than @AutoWired
     private final ApplicationUserRepository userRepository;
 
     public CustomUserDetailsService(ApplicationUserRepository userRepository) {
