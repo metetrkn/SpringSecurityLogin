@@ -1,7 +1,6 @@
-package se.mete.springinloggning.config;
+package se.mete.springinloggning.initializer;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import se.mete.springinloggning.entity.ApplicationUser;
