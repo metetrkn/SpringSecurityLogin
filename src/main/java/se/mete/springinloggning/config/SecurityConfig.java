@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -65,9 +66,11 @@ public class SecurityConfig {
                         .permitAll()
                 )
 
-                .logout(logout -> logout
-                        .permitAll() // Allow all users to access the logout endpoint
+                // Method reference, ClassName::methodName
+                .logout(LogoutConfigurer::permitAll // Allow all users to access the logout endpoint
                 );
+
+        // Returns configured SecurityFilterChain
         return http.build();
     }
 }
