@@ -19,7 +19,11 @@ public class SecurityConfig {
     // Constructor injection
     private final CustomAuthenticationSuccessHandler successHandler;
 
-
+    /**
+     * Parametrised constructor with DI
+     *
+     * @param successHandler = how app reacts after authentication
+     */
     public SecurityConfig(CustomAuthenticationSuccessHandler successHandler) {
         this.successHandler = successHandler;
     }
@@ -45,10 +49,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN", "MANAGER")
 
                         // Allow only MANAGER role to access /manager/** url
-                        .requestMatchers("/manager").hasRole("MANAGER")
+                        .requestMatchers("/manager/**").hasRole("MANAGER")
 
                         // Allow ADMIN and MANAGER roles to access /create-user/** url
-                        .requestMatchers("/create-user").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/create-user/**").hasAnyRole("ADMIN", "MANAGER")
 
                         // Allow public access/all users to the root and login pages
                         .requestMatchers("/", "/login").permitAll()

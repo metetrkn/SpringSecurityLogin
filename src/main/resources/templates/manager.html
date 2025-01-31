@@ -47,6 +47,20 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .nav-menu {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .nav-menu a {
+            margin-right: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .nav-menu a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -54,6 +68,13 @@
         <h2>Manager Dashboard</h2>
         <p>Welcome <span th:text="${#authentication.principal.username}" class="username"></span>! This page is only accessible to users with MANAGER roles.</p>
 
+        <!-- Navigation Menu -->
+        <div class="nav-menu">
+            <strong>Navigation:</strong>
+            <a href="/manager" class="active">Manager Page</a>
+            <a href="/admin">Admin Page</a>
+            <a href="/user">User Page</a>
+        </div>
 
         <div class="admin-section">
             <h3>Manager Functions</h3>
